@@ -20,14 +20,93 @@
                 </div>
             </div>
         </div>
+        <!-- Main content -->
         <section class="content">
-            <div class="container">
-                <div class="row ml-5">
-                    <div class="ml-5">
-                        <h3 class="ml-5"></h3>
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                @php
+                                    $jumlah_masuk = DB::table('kelola_ikan')->count();
+                                @endphp
+                                <h3>
+                                    @if ($jumlah_masuk != null)
+
+                                        {{ $jumlah_masuk }}
+                                    @else
+                                        {{ '0' }}
+                                    @endif
+                                </h3>
+                                <p>Jumlah Ikan Masuk</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="{{ route('kelola_ikan') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
                     </div>
+
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                @php
+                                    $jumlah_jual = DB::table('kelola_ikan')->count();
+                                @endphp
+                                <h3>
+                                    @if ($jumlah_jual != null)
+
+                                        {{ $jumlah_jual }}
+                                    @else
+                                        {{ '0' }}
+                                    @endif
+                                </h3>
+                                <p>Jumlah Ikan Jual</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="{{ route('kelola_penjualan') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                @php
+                                    date_default_timezone_set('Asia/Jakarta');
+                                    $tgl = date('Y-m-d');
+                                    $jumlah_expired = DB::table('kelola_ikan')
+                                        ->where('tanggal_expired', '<=', $tgl)
+                                        ->count();
+                                @endphp
+                                <h3>
+                                    @if ($jumlah_expired != null)
+                                        {{ $jumlah_expired }}
+                                    @else
+                                        {{ '0' }}
+                                    @endif
+                                </h3>
+
+                                <p>Jumlah Ikan Expired</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <a href="{{ route('laporan_expired') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
                 </div>
-                <img src="{{ asset('gambar/gambar.png') }}" width="70%" class="rounded mx-auto d-block">
             </div>
         </section>
         <!-- /.content -->

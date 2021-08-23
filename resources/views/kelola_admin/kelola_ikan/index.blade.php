@@ -54,11 +54,13 @@
                                 <?php
                                 $selisih = 0;
                                 $harga_jual = 0;
+                                date_default_timezone_set('Asia/Jakarta');
+                                $tgl = date('Y-m-d');
                                 ?>
                                 @foreach ($index as $i)
                                     <?php
-                                    $selisih1 = date_create($i->tanggal_input);
-                                    $selisih2 = date_create($i->tanggal_expired);
+                                    $selisih1 = date_create($i->tanggal_expired);
+                                    $selisih2 = date_create($i->tgl);
                                     $selisih = date_diff($selisih2, $selisih1);
                                     ?>
                                     <tr class="text-center">
@@ -69,7 +71,7 @@
                                         <td>{{ $i->tanggal_input }}</td>
                                         <td>{{ $i->tanggal_expired }}</td>
                                         <td>
-                                            @if ($selisih->format('%d') <= 7 and $selisih->format('%d') >= 6)
+                                            @if ($selisih->format('%d') <= 7 and $selisih->format('%d') >= 5)
                                                 {{ 'A' }}
                                                 @php
                                                     $harga_jual = $i->harga_jual - 0;

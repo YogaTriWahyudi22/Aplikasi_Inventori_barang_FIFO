@@ -17,8 +17,6 @@ class CreatePenjualanTable extends Migration
             $table->bigIncrements('id_penjualan');
             $table->bigInteger('id_user');
             $table->bigInteger('id_stok');
-            $table->bigInteger('id_histori_stok');
-            $table->bigInteger('id_pembayaran');
             $table->string('kode_ikan', '10');
             $table->bigInteger('stok_jual');
             $table->date('tanggal_jual');

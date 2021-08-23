@@ -11,14 +11,14 @@
                     <div class="col-sm-6">
 
                         <h1>
-                            <i class="fas fa-boxes"> Detail Penjualan</i>
+                            <i class="fas fa-tasks"> Laporan Barang Expired</i>
                         </h1>
 
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('admin') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Detail Penjualan</li>
+                            <li class="breadcrumb-item active">Laporan Barang Expired</li>
                         </ol>
                     </div>
                 </div>
@@ -26,9 +26,9 @@
         </div>
         <section class="content">
 
-            <div class="card card-success card-outline">
+            <div class="card card-primary card-outline">
                 <div class="card-header">
-                    <div class="card-title"><a href="{{ route('laporan') }}" class="btn btn-success">Back</a>
+                    <div class="card-title"><a href="{{ route('laporan') }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -38,30 +38,33 @@
                                 <tr class="text-center">
                                     <th>No.</th>
                                     <th>Nama Admin</th>
-                                    <th>Kode Tanaman</th>
-                                    <th>Nama Tanaman</th>
-                                    <th>Jumlah Stok Terjual</th>
+                                    <th>Kode Ikan</th>
+                                    <th>Nama Ikan</th>
+                                    <th>Jumlah Stok Awal</th>
                                     <th>Jumlah Stok Tesisa</th>
                                     <th>Tanggal Masuk</th>
-                                    <th>Tanggal Dijual</th>
-                                    <th>Harga Satuan</th>
+                                    <th>Tanggal Expired</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Harga Jual</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                @foreach ($detail as $i)
+                                @foreach ($expired as $i)
+
                                     <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $i->user_nama }}</td>
-                                        <td>{{ $i->kode_tanaman }}</td>
-                                        <td>{{ $i->nm_tanaman }}</td>
-                                        <td>{{ $i->stok_jual }}</td>
+                                        <td>{{ $i->nama_user }}</td>
+                                        <td>{{ $i->kode_ikan }}</td>
+                                        <td>{{ $i->nama_ikan }}</td>
+                                        <td>{{ $i->stok_awal }}</td>
                                         <td>{{ $i->stok }}</td>
-                                        <td>{{ $i->tanggal }}</td>
-                                        <td>{{ $i->tanggal_jual }}</td>
-                                        <td>Rp. {{ number_format($i->harga) }}</td>
-                                        <td>Rp. {{ number_format($i->harga * $i->stok_jual) }}</td>
+                                        <td>{{ $i->tanggal_input }}</td>
+                                        <td>{{ $i->tanggal_expired }}</td>
+                                        <td>Rp. {{ number_format($i->harga_beli) }}</td>
+                                        <td>Rp. {{ number_format($i->harga_jual) }}</td>
+                                        <td>Rp. {{ number_format($i->harga_beli * $i->stok) }}</td>
 
                                     </tr>
                                 @endforeach

@@ -58,7 +58,7 @@
             <a href="index3.html" class="brand-link">
                 <img src="{{ asset('asset/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Pertiwi Flowers</span>
+                <span class="brand-text font-weight-light">CV. ARPANO OCEAN</span>
             </a>
 
             <!-- Sidebar -->
@@ -93,7 +93,7 @@
         <!-- /.content-wrapper -->
 
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+            <strong>Copyright &copy; CV. ARPANO OCEAN.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 3.0.5

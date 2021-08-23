@@ -11,7 +11,7 @@
                     <div class="col-sm-6">
 
                         <h1>
-                            <i class="fas fa-boxes"> Kelola Penjualan</i>
+                            <i class="fas fa-balance-scale"> Kelola Penjualan</i>
                         </h1>
 
                     </div>
@@ -26,12 +26,12 @@
         </div>
         <section class="content">
             <!-- Default box -->
-            <a href="{{ route('jual') }}" class="btn btn-sm btn-success mb-2"><i class="fas fa-plus"></i> Penjualan
-                Tanaman</a>
+            <a href="{{ route('jual') }}" class="btn btn-sm btn-primary mb-2"><i class="fas fa-plus"></i> Penjualan
+                Ikan</a>
 
-            <div class="card card-success card-outline">
+            <div class="card card-primary card-outline">
                 <div class="card-header">
-                    <div class="card-title">Kelola Penjualan</div>
+                    <div class="card-title">Kelola Ikan</div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -40,8 +40,8 @@
                                 <tr class="text-center">
                                     <th>No.</th>
                                     <th>Nama Admin</th>
-                                    <th>Kode Tanaman</th>
-                                    <th>Nama Tanaman</th>
+                                    <th>Kode Ikan</th>
+                                    <th>Nama Ikan</th>
                                     <th>Jumlah Stok Terjual</th>
                                     <th>Tanggal Masuk</th>
                                     <th>Tanggal Dijual</th>
@@ -51,18 +51,18 @@
                             </thead>
                             <tbody>
 
-                                @foreach ($index as $i)
-
+                                @foreach ($penjualan as $i)
+                                    {{-- @dd($i) --}}
                                     <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $i->user_nama }}</td>
-                                        <td>{{ $i->kode_tanaman }}</td>
-                                        <td>{{ $i->nm_tanaman }}</td>
+                                        <td>{{ $i->name }}</td>
+                                        <td>{{ $i->kode_ikan }}</td>
+                                        <td>{{ $i->nama_ikan }}</td>
                                         <td>{{ $i->stok_jual }}</td>
-                                        <td>{{ $i->tanggal }}</td>
+                                        <td>{{ $i->tanggal_input }}</td>
                                         <td>{{ $i->tanggal_jual }}</td>
-                                        <td>Rp. {{ number_format($i->harga) }}</td>
-                                        <td>Rp. {{ number_format($i->harga * $i->stok_jual) }}</td>
+                                        <td>Rp. {{ number_format($i->harga_jual) }}</td>
+                                        <td>Rp. {{ number_format($i->harga_jual * $i->stok_jual) }}</td>
 
                                     </tr>
                                 @endforeach

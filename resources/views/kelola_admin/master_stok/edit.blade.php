@@ -1,6 +1,6 @@
 @extends('tampilan.admin')
 
-@section('title_admin', 'Tambah Stok')
+@section('title_admin', 'Edit Stok')
 
 @section('admin')
 
@@ -35,49 +35,29 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-10">
+
                                 <div class="form-group">
-                                    <label for="">Kode_tanaman</label>
-                                    <input type="text" name="kode_tanaman" value="{{ $edit->kode_tanaman }}"
+                                    <label for="">Kode Ikan</label>
+                                    <input type="text" name="kode_ikan" value="{{ $edit->kode_ikan }}"
                                         class="form-control" id="kode" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    @php
-                                        $tanaman = DB::table('input_tanaman')
-                                            ->where('kode_tanaman', '=', $edit->kode_tanaman)
-                                            ->first();
-                                    @endphp
-                                    <label for="">Nama Tanaman</label>
-                                    <select class="form-control" onchange="tanaman(this);"
-                                        aria-label="Default select example">
-                                        <option>{{ $tanaman->nama_tanaman }}</option>
-                                        @foreach ($lala as $t)
-                                            <option value="{{ $t->nama_tanaman }}">{{ $t->nama_tanaman }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('nama_tanaman')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
+                                    <label for="">Nama Ikan</label>
+                                    <input type="text" value="{{ $edit->nama_ikan }}" class="form-control" id="kode"
+                                        readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Stok Tanaman</label>
-                                    <input type="text" name="stok" value="{{ $edit->stok_awal }}"
-                                        class="form-control form-control-sm" required>
+                                    <label for="">Jumlah Stok</label>
+                                    <input type="text" value="{{ $edit->stok }}" class="form-control form-control-sm"
+                                        readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Tanggal</label>
-                                    <input type="date" name="tanggal" value="{{ $edit->tanggal }}"
-                                        class="form-control form-control-sm" required>
+                                    <label for="">Restok</label>
+                                    <input type="text" name="stok" class="form-control form-control-sm" required>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="">Harga</label>
-                                    <input type="text" name="harga" id="harga_satuan" value="{{ 'Rp. ' . $edit->harga }}"
-                                        class="form-control form-control-sm" required>
-                                </div>
-
 
                             </div>
                         </div>

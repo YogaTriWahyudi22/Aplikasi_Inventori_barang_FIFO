@@ -14,4 +14,14 @@ class Histori_stok extends Model
     protected $primaryKey = 'id_histori_stok';
 
     protected $fillable = ['id_user', 'kode_ikan', 'stok_awal', 'stok', 'tanggal', 'keterangan'];
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'id_user');
+    }
+
+    public function kelola_ikan()
+    {
+        return $this->hasOne('App\Models\Kelola_ikan', 'kode_ikan', 'kode_ikan');
+    }
 }

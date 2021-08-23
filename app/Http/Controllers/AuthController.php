@@ -55,7 +55,7 @@ class AuthController extends Controller
     {
         if (Auth::user()->status == 'pimpinan') {
 
-            return view('pimpinan.kelola_akun.dashboard');
+            return view('kelola_admin.kelola_akun.dashboard');
         } else {
             return redirect()->route('/');
         }

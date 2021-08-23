@@ -22,11 +22,27 @@ class StokController extends Controller
         return view('kelola_admin.master_stok.index', compact('index'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function histori()
+    {
+        $histori = Histori_stok::join('users', 'histori_stok.id_user', 'users.id')->join('kelola_ikan', 'histori_stok.kode_ikan', '=', 'kelola_ikan.kode_ikan')
+            ->select('histori_stok.*', 'users.name', 'kelola_ikan.tanggal_expired', 'kelola_ikan.nama_ikan', 'kelola_ikan.harga_jual')->get();
+        return view('kelola_admin.histori_stok.index', compact('histori'));
+    }
+
+    public function cari(Request $request)
+    {
+        $cari = Histori_stok::join('users', 'histori_stok.id_user', 'users.id')->join('kelola_ikan', 'histori_stok.kode_ikan', '=', 'kelola_ikan.kode_ikan')
+            ->select('histori_stok.*', 'users.name', 'kelola_ikan.tanggal_expired', 'kelola_ikan.nama_ikan', 'kelola_ikan.harga_jual');
+
+        if ($request->periode) {
+            $data = $cari->whereMonth('histori_stok.tanggal', [$request->periode]);
+        } else {
+            $data = $cari;
+        }
+        $histori = $data->get();
+        return view('kelola_admin.histori_stok.index', compact('histori'));
+    }
+
     public function create()
     {
         $kelola_ikan = Kelola_ikan::all();
@@ -68,8 +84,8 @@ class StokController extends Controller
 
             Alert::success('Stok Berhasil', 'Data Berhasil Ditambahkan');
             return redirect()->route('kelola_stok');
-        } elseif ($stok_ikan != NULL) {
-            Stok_ikan::where($stok_ikan->kode_ikan == $request->kode_ikan)->update([
+        } elseif ($stok_ikan->kode_ikan == $request->kode_ikan) {
+            Stok_ikan::where('kode_ikan', $request->kode_ikan)->update([
                 'stok' => $request->stok + $stok_ikan->stok,
                 'stok_awal' => $request->stok + $stok_ikan->stok_awal,
             ]);
@@ -105,9 +121,11 @@ class StokController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_stok)
     {
-        //
+        $edit = Stok_ikan::join('kelola_ikan', 'stok_ikan.kode_ikan', '=', 'kelola_ikan.kode_ikan')->select('stok_ikan.*', 'kelola_ikan.kode_ikan', 'kelola_ikan.nama_ikan')->where('id_stok', $id_stok)
+            ->first();
+        return view('kelola_admin.master_stok.edit', compact('edit'));
     }
 
     /**
@@ -117,9 +135,28 @@ class StokController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_stok)
     {
-        //
+        $stok_kurang = Stok_ikan::where('id_stok', $id_stok)->first();
+
+        date_default_timezone_set('Asia/Jakarta');
+        $tgl = date('Y-m-d');
+        Stok_ikan::where('id_stok', $id_stok)->update([
+            'stok_awal' => $stok_kurang->stok_awal - $request->stok,
+            'stok' => $stok_kurang->stok - $request->stok
+        ]);
+
+        $histori = new Histori_stok;
+        $histori->id_user = Auth::user()->id;
+        $histori->kode_ikan = $request->kode_ikan;
+        $histori->stok_awal = $request->stok;
+        $histori->stok = $request->stok;
+        $histori->tanggal = $tgl;
+        $histori->keterangan = 'Mengurangi Data';
+        $histori->save();
+
+        Alert::success('Stok Berhasil', 'Data Berhasil Ditambahkan');
+        return redirect()->route('kelola_stok');
     }
 
     /**

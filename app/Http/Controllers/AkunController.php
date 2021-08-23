@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Alamat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -13,10 +14,40 @@ class AkunController extends Controller
 {
     public function dashboard()
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $tgl = date('Y-m-d');
+        $data = [
+            'jumlah_expired' => DB::table('kelola_ikan')->where('tanggal_expired', '<=', $tgl)->count(),
+            'jumlah_masuk' => DB::table('kelola_ikan')
+                ->select(DB::raw('SUM(id_kelola_ikan) as id'))->first(),
+            'jumlah_terjual' => DB::table('penjualan')
+                ->select(DB::raw('SUM(id_penjualan) as id_penjualan'))->first(),
+
+            // 'barang_keluar' => DB::table('mutasi')
+            //     ->select(DB::raw('SUM(stok) as stok_keluar'))->first(),
+
+            // 'nilai_masuk' => DB::table('master_stok')
+            //     ->SELECT(DB::raw('SUM(stok * harga_satuan) as nilai_stok'))
+            //     ->first(),
+
+            // 'nilai_keluar' => DB::table('mutasi')
+            //     ->join('master_stok', 'mutasi.id_stok', '=', 'master_stok.id_stok')
+            //     ->SELECT(DB::raw('SUM(mutasi.stok * harga_satuan) as nilai_jumlah '))
+            //     ->first(),
+
+            // 'nilai_expired' => DB::table('input_barang')
+            //     ->join('master_stok', 'input_barang.kode_barang', '=', 'master_stok.kode_barang')
+            //     ->where('expired', '<=', $tgl)
+            //     ->SELECT(DB::raw('SUM(stok * harga_satuan) as nilai_expired'))
+            //     ->first(),
+
+            // 'stok_awal' => DB::table('master_stok')
+            //     ->select(DB::raw('SUM(stok_awal) as stok_awal'))->first(),
+        ];
         if (!empty(Auth::user()->username)) {
             return view('kelola_admin.kelola_akun.dashboard');
         } else {
-            return view('kelola_admin.kelola_akun.dashboard');
+            return view('auth.login');
         }
     }
 

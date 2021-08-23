@@ -20,8 +20,8 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <span><b>CV.Pertiwi
-                </b>Flowers</span>
+            <span><b>CV. ARPANO
+                </b>OCEAN</span>
         </div>
         <!-- /.login-logo -->
         <div class="card">

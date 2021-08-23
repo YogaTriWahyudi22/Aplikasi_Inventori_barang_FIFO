@@ -11,7 +11,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
 
-                        <h1><i class="fas fa-boxes">Kelola Penjualan</i></h1>
+                        <h1><i class="fas fa-balance-scale">Kelola Penjualan</i></h1>
 
                     </div>
                     <div class="col-sm-6">
@@ -28,7 +28,7 @@
 
             <form action="{{ route('jual') }}" method="POST">
                 @csrf
-                <div class="card card-success card-outline">
+                <div class="card card-primary card-outline">
                     <div class="card-header">
                         <div class="card-title">Penjualan</div>
                     </div>
@@ -37,39 +37,39 @@
                             <div class="col-sm-10">
                                 <input type="hidden" name="id_stok" id="id_stok">
 
-                                <div class="row">
-                                    <div class="col">
-                                        <label for=""> Kode Tanaman</label>
-                                        <input type="text" name="kode_tanaman" id="kode" class="form-control"
-                                            placeholder="Kode Tanaman" value="{{ old('kode_tanaman') }}" readonly>
-                                    </div>
-                                    <div class="col">
-                                        <label for=""> &nbsp; Stok Tersedia </label>
-                                        <input type="text" id="stok_tersedia" class="form-control"
-                                            placeholder="Stok Tersedia" readonly>
-                                    </div>
+                                <div class="row" id="kode">
+
+                                </div>
+
+                                <div class="row mt-2 mb-2" id="tanggal">
+
                                 </div>
 
                                 <div class="row mt-2 mb-2">
                                     <div class="col">
-                                        <label for=""> Harga Tanaman</label>
-                                        <input type="text" id="harga_tanaman" class="form-control"
-                                            placeholder="harga Tanaman" value="{{ old('harga_tanaman') }}" readonly>
+                                        <label for=""> Kualitas</label>
+                                        <input type="text" id="kualitas" class="form-control" placeholder="Kualitas Ikan"
+                                            value="{{ old('harga_jual') }}" readonly>
                                     </div>
                                     <div class="col">
-                                        <label for=""> &nbsp; Tanggal Input </label>
-                                        <input type="text" id="tanggal_input" class="form-control"
-                                            placeholder="Tanggal Input" readonly>
+                                        <label for=""> Harga Ikan</label>
+                                        <input type="text" id="harga_jual" name="harga_jual" class="form-control"
+                                            placeholder="harga Jual" value="{{ old('harga_jual') }}" readonly>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Nama Tanaman</label>
-                                    <select class="form-control" onchange="tanaman(this);"
-                                        aria-label="Default select example">
-                                        <option selected>Nama Tanaman</option>
-                                        @foreach ($tanaman as $t)
-                                            <option value="{{ $t->nama_tanaman }}">{{ $t->nama_tanaman }}</option>
+                                    @php
+                                        date_default_timezone_set('Asia/Jakarta');
+                                        $tgl = date('Y-m-d');
+                                    @endphp
+                                    <label for="">Nama Ikan</label>
+                                    <select class="form-control" onchange="ikan(this);" aria-label="Default select example">
+                                        <option selected>Nama Ikan</option>
+                                        @foreach ($ikan as $t)
+                                            @if ($t->tanggal_expired > $tgl || $t->tanggal_expired == '')
+                                                <option value="{{ $t->nama_ikan }}">{{ $t->nama_ikan }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('nama_tanaman')
@@ -79,8 +79,9 @@
 
                                 <div class="form-group">
                                     <label for="">Kuantiti Dijual </label>
-                                    <input type="text" name="stok_jual" id="id_kuantiti" value="{{ old('stok_jual') }}"
-                                        class="form-control form-control-sm" placeholder="Jumlah stok yang dijual" required>
+                                    <input type="text" name="stok_jual" onkeyup="kuantiti(this.value)"
+                                        value="{{ old('stok_jual') }}" class="form-control form-control-sm"
+                                        placeholder="Jumlah stok yang dijual" required>
                                 </div>
 
                                 <div class="form-group">
@@ -117,59 +118,79 @@
     </div>
 
     <script type="text/javascript">
-        function tanaman(val) {
+        function ikan(val) {
             $.ajax({
                 url: "{{ route('ajax_jual') }}",
                 type: 'POST',
                 datatype: 'JSON',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "tanaman": val.value,
+                    "ikan": val.value,
                 },
 
                 success: function(response) {
-                    console.log(response);
-                    $('#id_stok').val(response.id_stok)
-                    $('#kode').val(response.kode_tanaman)
-                    $('#stok_tersedia').val(response.stok)
-                    $('#harga_tanaman').val(response.harga)
-                    $('#tanggal_input').val(response.tanggal)
+                    // console.log(response);
+                    $('#harga_jual').val(response.harga_jual)
+                    $('#kualitas').val(response.kualitas)
+                    let data = response.ajax
+                    let view = "";
+                    let view1 = "";
+                    view = `<div class="col">
+                                        <label for=""> Kode Ikan</label>
+                                        <input type="hidden" name="id_stok" value="${data.id_stok}">
+                                        <input type="text" name="kode_ikan" class="form-control"
+                                            placeholder="Kode Tanaman" value="${data.kode_ikan}" readonly>
+                                    </div>
+                                    <div class="col">
+                                        <label for=""> &nbsp; Stok Tersedia </label>
+                                        <input type="text" class="form-control" value="${data.stok}" placeholder="Stok Tersedia" readonly>
+                                    </div>`
+                    view1 = `<div class="col">
+                                        <label for=""> &nbsp; Tanggal Input </label>
+                                        <input type="text" value="${data.tanggal_input}" class="form-control"
+                                            placeholder="Tanggal Input" readonly>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for=""> &nbsp; Tanggal Expired </label>
+                                        <input type="text" value="${data.tanggal_expired}" class="form-control"
+                                            placeholder="Tanggal Input" readonly>
+                                    </div>`
+
+                    document.getElementById('kode').innerHTML = view;
+                    document.getElementById('tanggal').innerHTML = view1;
 
                 }
             })
         }
 
-        var rupiah = document.getElementById('harga_satuan');
-        rupiah.addEventListener('keyup', function(e) {
-            // tambahkan 'Rp.' pada saat ketik nominal di form kolom input
-            // gunakan fungsi formatRupiah() untuk mengubah nominal angka yang di ketik menjadi format angka
-            rupiah.value = formatRupiah(this.value, 'Rp. ');
-        });
+        function kuantiti(id) {
+            var k = id
+            var harga = document.getElementById('harga_jual').value
+            var harga_akhir = harga * k
+            document.getElementById('harga_satuan').value = formatRupiah(harga_akhir, 'Rp. ')
+
+
+
+        }
+
         /* Fungsi formatRupiah */
         function formatRupiah(angka, prefix) {
             var number_string = angka.toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
+                harga_beli = split[0].substr(0, sisa),
                 ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
             // tambahkan titik jika yang di input sudah menjadi angka satuan ribuan
             if (ribuan) {
                 separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
+                harga_beli += separator + ribuan.join('.');
             }
 
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+            harga_beli = split[1] != undefined ? harga_beli + ',' + split[1] : harga_beli;
+            return prefix == undefined ? harga_beli : (harga_beli ? 'Rp. ' + harga_beli : '');
         }
-
-        let kuantiti = document.getElementById('id_kuantiti')
-        kuantiti.addEventListener("keyup", function() {
-            let harga = document.getElementById('harga_tanaman').value
-            let totalPembayaran = document.getElementById('harga_satuan')
-            let total = harga * this.value
-            totalPembayaran.value = formatRupiah(total, 'Rp. ')
-        });
     </script>
 
 @endsection

@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('master_stok')->group(function () {
         Route::get('index', [StokController::class, 'index'])->name('kelola_stok');
         Route::get('histori', [StokController::class, 'histori'])->name('histori');
+        Route::POST('histori_1', [StokController::class, 'cari'])->name('cari');
         Route::get('tambah', [StokController::class, 'create'])->name('stok_tambah');
         Route::POST('tambah', [StokController::class, 'store'])->name('stok_tambah');
         Route::POST('ajax', [StokController::class, 'ajax_stok'])->name('ajax_stok');
@@ -73,6 +74,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('laporan')->group(function () {
         Route::get('laporan', [LaporanController::class, 'laporan'])->name('laporan');
-        Route::get('detail/{id_user}', [LaporanController::class, 'detail'])->name('detail');
+        Route::get('laporan_expired', [LaporanController::class, 'expired'])->name('laporan_expired');
     });
 });

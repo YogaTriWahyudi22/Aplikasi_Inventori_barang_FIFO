@@ -51,19 +51,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($index as $i)
+                                @foreach ($index as $i)
                                     <tr class="text-center">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $i->user->name }}</td>
-                                        <td>{{ $i->kode_tanaman }}</td>
-                                        <td>{{ $i->tanaman->nama_tanaman }}</td>
+                                        <td>{{ $i->kode_ikan }}</td>
+                                        <td>{{ $i->kelola_ikan->nama_ikan }}</td>
+                                        <td>{{ $i->stok_awal }}</td>
                                         <td>{{ $i->stok }}</td>
                                         <td>
                                             <a href="{{ route('stok_edit', $i->id_stok) }}"
                                                 class="btn btn-block btn-info mb-2"><i class="fas fa-edit"></i>Edit</a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

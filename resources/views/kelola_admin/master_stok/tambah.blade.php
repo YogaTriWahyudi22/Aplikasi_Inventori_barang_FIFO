@@ -28,7 +28,7 @@
 
             <form action="{{ route('stok_tambah') }}" method="POST">
                 @csrf
-                <div class="card card-success card-outline">
+                <div class="card card-primary card-outline">
                     <div class="card-header">
                         <div class="card-title">Tambah data stok</div>
                     </div>
