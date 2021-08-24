@@ -42,28 +42,24 @@
 <body>
 
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top d-flex align-items-center  header-transparent ">
-        <div class="container d-flex justify-content-between">
+    <header id="header" class="fixed-top d-flex align-items-center  header-transparent">
+        <div class="container" style="width: 10em; margin-left:70px">
+            <div class="container" style="width: 900em;">
+                <nav id="navbar" class="navbar justify-content-between">
+                    <ul class=" mr-auto">
+                        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                        <li><a class="nav-link scrollto" href="#about">Tentang Kami</a></li>
+                        <li><a class="nav-link scrollto" href="#contact">Kontak Kami</a></li>
+                    </ul>
+                    <ul class="float-right">
+                        <li>
+                            <a class="nav-link scrollto" href="{{ route('login') }}">Login</a>
+                        </li>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
 
-            <div class="logo">
-                <h1><a href="index.html"></a></h1>
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html"><img src="img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
-
-            <nav id="navbar" class="navbar ">
-                <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">Tentang Kami</a></li>
-                    <li><a class="nav-link scrollto" href="#contact">Kontak Kami</a></li>
-
-
-                    <li><a class="nav-link scrollto" href="{{ route('login') }}">Login</a></li>
-
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
-
         </div>
         <div class="container d-flex justify-content-around">
 
